@@ -9,6 +9,8 @@ const checkToken=async(req,res,next)=>{
     if(decoded){
         await connect()
         req.username=await User.findById(decoded.id);
+        console.log(req.username);
+        
         next();
     }else{
         return res.json({

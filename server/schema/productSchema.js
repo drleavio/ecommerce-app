@@ -16,11 +16,9 @@ const productSchema = new mongoose.Schema({
     required: [true, 'Please enter product price'],
     max: [99999, 'Price cannot exceed 99999']
   },
-  images: [
-    {
-      url: { type: String, required: false }
-    }
-  ],
+  images:{
+    type:String
+  },
   category: {
     type: String,
     required: [true, 'Please select category for this product'],
@@ -36,16 +34,12 @@ const productSchema = new mongoose.Schema({
     max: [9999, 'Stock cannot exceed 9999'],
     default: 0
   },
-  color:[
-    {
-        tag:{type:String}
-    }
-  ],
-  size:[
-    {
-        tag:{type:String}
-    }
-  ],
+  color:{
+    type:String
+  },
+  size:{
+    type:String
+  },
   createdAt: {
     type: Date,
     default: Date.now
