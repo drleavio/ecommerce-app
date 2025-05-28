@@ -18,7 +18,7 @@ const Login = () => {
     }
     const handleclick = async (e) => {
         e.preventDefault();
-        const response = await axios.post("http://localhost:3001/auth/signin", data);
+        const response = await axios.post("https://ecommerce-app-zz9k.onrender.com/auth/signin", data);
         console.log(response.data.token);
         setTokenState(response.data.token)
         navigate('/')
