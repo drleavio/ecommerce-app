@@ -99,32 +99,32 @@ const Checkout = () => {
       <form
         onSubmit={handleSend}
         className='flex items-center justify-center flex-col gap-3 w-full max-w-md'
-      >
-        <label>Name</label>
-        <input type="text" name='name' value={data.name} className='border w-full' onChange={handleChange} required />
+      > 
+        <label className='w-full'>Name</label>
+        <input type="text" name='name' value={data.name} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>Email</label>
-        <input type="email" name='email' value={data.email} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>Email</label>
+        <input type="email" name='email' value={data.email} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>Phone number</label>
-        <input type="tel" name='phone' value={data.phone} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>Phone number</label>
+        <input type="tel" name='phone' value={data.phone} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>Address</label>
-        <input type="text" name='address' value={data.address} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>Address</label>
+        <input type="text" name='address' value={data.address} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>City, State, Zip code</label>
-        <input type="text" name='cityStateZip' value={data.cityStateZip} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>City, State, Zip code</label>
+        <input type="text" name='cityStateZip' value={data.cityStateZip} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>Card Number</label>
-        <input type="text" name='cardNumber' value={data.cardNumber} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>Card Number</label>
+        <input type="text" name='cardNumber' value={data.cardNumber} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>Expiry date</label>
-        <input type="text" name='expiryDate' value={data.expiryDate} className='border w-full' onChange={handleChange} required />
+        <label className='w-full'>Expiry date</label>
+        <input type="text" name='expiryDate' value={data.expiryDate} className='border w-full p-2 rounded-md' onChange={handleChange} required />
 
-        <label>CVV</label>
-        <input type="text" name='cvv' value={data.cvv} className='border w-full' onChange={handleChange} required />
-            <div>{datas.price}</div>
-        <button type="submit" className='bg-black px-4 py-2 rounded-md text-white mt-4'>Purchase</button>
+        <label className='w-full'>CVV</label>
+        <input type="text" name='cvv' value={data.cvv} className='border w-full p-2 rounded-md' onChange={handleChange} required />
+            <div>Amount to pay: {datas.price}</div>
+        <button type="submit" className='w-full bg-black px-4 py-2 rounded-md text-white mt-4'>Purchase</button>
       </form>
     </div>
    

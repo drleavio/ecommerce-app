@@ -55,7 +55,7 @@ const Cart = () => {
     },[])
   return (
     <div className='w-[100%]'>
-        <div className='w-[100%] flex items-center justify-between px-3'>
+        <div className='w-[100%] flex items-center justify-between px-3 py-2'>
         <div>Total Items: {data.totalItems}</div>
         <div>Total price: {data.totalPrice}</div>
         </div>

@@ -20,7 +20,7 @@ const NavBar = () => {
 
   return (
     <div className='w-full bg-blue-500 py-4 px-5 flex items-center sticky top-0 justify-between '>
-      <Link to="/"><div>Shop</div></Link>
+      <Link to="/"><div className='text-3xl text-white'>Shop</div></Link>
       <div className='flex items-center justify-center gap-3'>
         {!token ? (
           <>
@@ -29,7 +29,7 @@ const NavBar = () => {
           </>
         ) : (
           <>
-            <div onClick={handleClick}>Logout</div>
+            <div className='bg-black px-3 py-2 text-white rounded-md' onClick={handleClick}>Logout</div>
             <Link to="/cart">
             <div className='relative h-[50px] w-[50px] flex items-center justify-center'>
               <div className='absolute top-0 right-0 bg-white rounded-full h-[20px] w-[20px] flex items-center justify-center'>{cartCount}</div>
