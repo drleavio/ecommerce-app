@@ -16,7 +16,7 @@ const Cart = () => {
       };
     
     const fetchcart=async()=>{
-        const response=await axios.get("http://localhost:3001/api/showcart",config)
+        const response=await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/showcart",config)
         console.log(response);
         console.log(response);
         setData(response.data.cart)
@@ -39,7 +39,7 @@ const Cart = () => {
             quantity: 0,
           };
     
-          const response = await axios.put("http://localhost:3001/api/updatecart", data, config);
+          const response = await axios.put("https://ecommerce-app-1-gn2p.onrender.com/api/updatecart", data, config);
           console.log("Cart updated:", response.data);
           toast.success("product removed from cart")
           fetchcart()

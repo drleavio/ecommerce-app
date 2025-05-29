@@ -19,7 +19,7 @@ export const CartProvider = ({ children }) => {
       },
     };
     try {
-      const response = await axios.get("http://localhost:3001/api/showcart", config);
+      const response = await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/showcart", config);
       console.log(response,"response");
       setCartId(response.data.cart._id)
       setCartCount(response.data.cart.totalItems || 0);
