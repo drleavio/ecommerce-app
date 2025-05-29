@@ -1,9 +1,11 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState,useEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthContext from '../context/useAuth';
 
 const SignUp = () => {
     const navigate=useNavigate();
+    const {token}=useContext(AuthContext)
     const [data,setData]=useState({
         username:"",
         password:""
@@ -16,11 +18,17 @@ const SignUp = () => {
     }
     const handleclick=async(e)=>{
         e.preventDefault();
-        const response=await axios.post("https://ecommerce-app-zz9k.onrender.com/auth/signup",data);
+        const response=await axios.post("http://localhost:3001/auth/signup",data);
         navigate('/login')
         console.log(response);
         
     }
+     useEffect(() => {
+           if(token){
+            navigate("/")
+           }
+    
+        }, [])
   return (
     <div className='h-full w-full flex items-center justify-center'>
             <div className='flex items-center justify-center flex-col bg-white px-20 gap-5 py-10 rounded-2xl'>

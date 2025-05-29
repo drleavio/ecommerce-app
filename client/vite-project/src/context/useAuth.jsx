@@ -7,22 +7,27 @@ export const AuthProvider = ({ children }) => {
     return localStorage.getItem("token");
   });
 
-
   useEffect(() => {
     if (token) {
-      localStorage.setItem("token", `Bearer ${token}`);
+      localStorage.setItem("token",token);
     } else {
       localStorage.removeItem("token");
     }
   }, [token]);
 
-  // Custom setter to update both state and localStorage
+  // Set token state and localStorage
   const setTokenState = (newToken) => {
     setToken(newToken);
   };
 
+  // Logout function
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem("token");
+  };
+
   return (
-    <AuthContext.Provider value={{ token, setTokenState }}>
+    <AuthContext.Provider value={{ token, setTokenState, logout }}>
       {children}
     </AuthContext.Provider>
   );
