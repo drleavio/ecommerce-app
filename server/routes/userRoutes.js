@@ -3,7 +3,13 @@ const router = express.Router();
 const Product = require("../schema/productSchema");
 const connect = require('../db/connectDB');
 const Cart = require('../schema/cartSchema');
+const Order=require('../schema/orderSchema')
 const checkToken = require('../middleware');
+const nodemailer = require("nodemailer");
+
+require('dotenv').config();
+
+
 
 
 router.post("/addproducts", async (req, res) => {
@@ -54,7 +60,8 @@ router.get("/products", async (req, res) => {
 })
 
 router.put("/updatecart", checkToken, async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  const userId=req.userId;
+  const { productId, quantity } = req.body;
 
   if (!userId || !productId || quantity == null) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -72,7 +79,7 @@ router.put("/updatecart", checkToken, async (req, res) => {
     const itemData = {
       product: product._id,
       name: product.name,
-      image: product.images[0].url, // or product.image depending on your schema
+      image: product.images, // or product.image depending on your schema
       price: product.price,
       quantity: quantity,
     };
@@ -109,10 +116,14 @@ router.put("/updatecart", checkToken, async (req, res) => {
 });
 
 router.get("/showcart", checkToken, async (req, res) => {
-  const { userId } = req.body;
+  const userId = req.userId;
+  // console.log(userId,"user");
+  
   try {
     await connect()
     let cart = await Cart.findOne({ user: userId });
+    // console.log(cart);
+    
     return res.json({
       messgae: "card show success",
       cart
@@ -148,6 +159,59 @@ router.get("/product/:id", async (req, res) => {
     });
   }
 });
+
+
+router.post("/checkout/:id", checkToken, async (req, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
+
+  console.log(id,userId,"check");
+  
+  try {
+    const {
+      name,
+      email,
+      phone,
+      address,
+      cityStateZip,
+      cardNumber,
+      expiryDate,
+      cvv,
+      price
+    } = req.body;
+    const productList=await Cart.findById(id);
+    console.log(productList.items,"list");
+    
+    const newOrder = new Order({
+      user: userId,
+      cart: id,
+      name,
+      email,
+      phone,
+      address,
+      cityStateZip,
+      cardNumber,
+      expiryDate,
+      cvv,
+      price
+    });
+   
+    const savedOrder = await newOrder.save();
+    // await sendScoreToEmail(email,id,price) 
+    const timer=setTimeout(()=>{
+      res.json({ message: "Order placed successfully", order: savedOrder,status:"success" });
+    },3000) 
+
+    return ()=>clearTimeout(timer)
+
+  } catch (error) {
+    console.error("Checkout failed:", error);
+    res.status(500).json({ message: "Checkout failed", error });
+  }
+});
+
+module.exports = router;
+
 
 
 

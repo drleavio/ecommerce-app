@@ -31,7 +31,7 @@ const cartSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true,"reference not"],
-    unique: true
+    // unique: true
   },
   items: [cartItemSchema],
   totalItems: {

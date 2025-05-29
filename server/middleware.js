@@ -6,10 +6,15 @@ const checkToken=async(req,res,next)=>{
     const tokendata=req.headers.authorization;
     const token=tokendata.split(" ")[1];
     const decoded=jwt.verify(token,"password");
+    const tok=decoded.username;
+   
+    
     if(decoded){
         await connect()
-        req.username=await User.findById(decoded.id);
-        console.log(req.username);
+        const response = await User.findOne({ username: tok });
+        req.userId=response._id;
+        // console.log(response,"response");
+        
         
         next();
     }else{
