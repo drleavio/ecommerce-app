@@ -21,7 +21,7 @@ const SignUp = () => {
     const handleclick=async(e)=>{
         e.preventDefault();
         setLoading(true)
-        const response=await axios.post("http://localhost:3001/auth/signup",data);
+        const response=await axios.post("https://ecommerce-app-1-gn2p.onrender.com/auth/signup",data);
         toast.success("signedup successfully")
         navigate('/login')
         console.log(response);
