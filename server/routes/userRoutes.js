@@ -164,6 +164,11 @@ router.get("/product/:id", async (req, res) => {
 router.post("/checkout/:id", checkToken, async (req, res) => {
   const { id } = req.params;
   const userId = req.userId;
+  await connect();
+  const cart = await Cart.findOne({ user: userId });
+  if (!cart || cart.items.length === 0) {
+    return res.status(400).json({ message: "Cart is empty" });
+  }
 
   console.log(id,userId,"check");
   
@@ -179,12 +184,18 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
       cvv,
       price
     } = req.body;
-    const productList=await Cart.findById(id);
-    console.log(productList.items,"list");
+    // const productList=await Cart.findById(id);
+    // console.log(productList.items,"list");
     
     const newOrder = new Order({
       user: userId,
-      cart: id,
+      cart: cart.items.map(item => ({
+        productId: item.product,
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        image:item.image
+      })),
       name,
       email,
       phone,
@@ -197,6 +208,7 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
     });
    
     const savedOrder = await newOrder.save();
+    await Cart.deleteOne({ user: userId });
     // await sendScoreToEmail(email,id,price) 
     const timer=setTimeout(()=>{
       res.json({ message: "Order placed successfully", order: savedOrder,status:"success" });
@@ -209,6 +221,28 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
     res.status(500).json({ message: "Checkout failed", error });
   }
 });
+
+router.get("/orderdetails",checkToken,async(req,res)=>{
+    const userId=req.userId;
+    try {
+      const response=await Order.find({user:userId});
+      const productdetails=await Cart.find({user:userId})
+      console.log(typeof(response));
+      
+      if(response){
+        return res.json({
+          message:"order details sent successfully",
+          response
+        })
+      }
+    } catch (error) {
+      return res.json({
+        message:"error fetching order details"
+      })
+    }
+    
+    
+})
 
 module.exports = router;
 

@@ -6,11 +6,15 @@ const OrderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  cart: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Cart",
-    required: true,
-  },
+  cart: [
+  {
+    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
+      name: String,
+      quantity: Number,
+      price: Number,
+      image:String
+  }
+],
   name: String,
   email: String,
   phone: Number,
