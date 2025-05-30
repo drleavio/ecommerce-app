@@ -8,7 +8,7 @@ import emailjs from "@emailjs/browser";
 import Modal from '../components/Modal';
 
 const Checkout = () => {
-  const { cartId } = useCart();
+  const { cartId,fetchCart } = useCart();
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
   const {data}=useCart()
@@ -28,10 +28,10 @@ const Checkout = () => {
 
   useEffect(() => {
     if (!token) {
-      toast.error("Please login");
-      navigate("/");
+      alert("Please login");
+    //   navigate("/");
     }
-  }, [token, navigate]);
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,15 +53,16 @@ const Checkout = () => {
    
       
       const response = await axios.post(
-        `https://ecommerce-app-1-gn2p.onrender.com/api/checkout/${cartId}`,
+        `http://localhost:3001/api/checkout/${cartId}`,
         datas,
         config
       );
   
     await sendScoreToEmail(response.data.order.email,response.data.order._id,response.data.order.name)
       
-      toast.success("Order placed successfully!");
-      navigate("/"); // redirect to home or success page
+    //   toast.success("Order placed successfully!");
+      fetchCart()
+      navigate("/thanks"); // redirect to home or success page
       setLoading(false)
     } catch (error) {
       console.error(error);

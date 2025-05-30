@@ -8,6 +8,8 @@ import Product from './pages/Product'
 import Cart from './pages/Cart'
 import NavBar from './components/NavBar'
 import Checkout from './pages/Checkout'
+import Orders from './pages/Orders'
+import Thanks from './pages/Thanks'
 
 function App() {
   
@@ -24,6 +26,8 @@ function App() {
               <Route path='/products/:id' element={<Product/>}/>
               <Route path='/cart' element={<Cart/>}/>
               <Route path='/checkout' element={<Checkout/>}/>
+              <Route path='/orders' element={<Orders/>}/>
+              <Route path='/thanks' element={<Thanks/>}/>
             </Routes>
           </BrowserRouter>
       </div>

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const Cart = () => {
     const {token}=useContext(AuthContext);
     const {fetchCart,data,setData}=useCart()
-    // console.log(token);
+    console.log(data,"data");
     const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -16,9 +16,7 @@ const Cart = () => {
       };
     
     const fetchcart=async()=>{
-        const response=await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/showcart",config)
-        console.log(response);
-        console.log(response);
+        const response=await axios.get("http://localhost:3001/api/showcart",config)
         setData(response.data.cart)
     }
     const removeItem = async (id) => {
@@ -39,8 +37,8 @@ const Cart = () => {
             quantity: 0,
           };
     
-          const response = await axios.put("https://ecommerce-app-1-gn2p.onrender.com/api/updatecart", data, config);
-          console.log("Cart updated:", response.data);
+          const response = await axios.put("http://localhost:3001/api/updatecart", data, config);
+        //   console.log("Cart updated:", response.data);
           toast.success("product removed from cart")
           fetchcart()
           fetchCart()
@@ -50,11 +48,17 @@ const Cart = () => {
         }
       };
     useEffect(()=>{
+        
         fetchCart();
         fetchcart()
+        
     },[])
   return (
     <div className='w-[100%]'>
+        {
+            !data ? <div>cart is empty</div>:
+            <>
+        
         <div className='w-[100%] flex items-center justify-between px-3 py-2'>
         <div>Total Items: {data.totalItems}</div>
         <div>Total price: {data.totalPrice}</div>
@@ -78,6 +82,8 @@ const Cart = () => {
         <div className='p-4'>
         <Link to="/checkout"><button className='bg-black text-white px-3 py-2 rounded-md'>Checkout</button></Link>
         </div>
+        </>
+}
     </div>
   )
 }
