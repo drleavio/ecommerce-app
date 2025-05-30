@@ -53,7 +53,7 @@ const Checkout = () => {
    
       
       const response = await axios.post(
-        `http://localhost:3001/api/checkout/${cartId}`,
+        `https://ecommerce-app-1-gn2p.onrender.com/api/checkout/${cartId}`,
         datas,
         config
       );

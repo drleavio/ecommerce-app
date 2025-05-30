@@ -13,7 +13,7 @@ const Orders = () => {
       };
      
     const fetchOrders=async()=>{
-        const response=await axios.get("http://localhost:3001/api/orderdetails",config);
+        const response=await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/orderdetails",config);
         console.log(response);
         setData(response.data.response);
     }

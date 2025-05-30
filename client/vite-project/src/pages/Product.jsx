@@ -38,7 +38,7 @@ const Product = () => {
         quantity: 1,
       };
 
-      const response = await axios.put("http://localhost:3001/api/updatecart", data, config);
+      const response = await axios.put("https://ecommerce-app-1-gn2p.onrender.com/api/updatecart", data, config);
       console.log("Cart updated:", response.data);
       toast.success("product added to cart")
       fetchCart()

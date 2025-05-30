@@ -16,7 +16,7 @@ const Cart = () => {
       };
     
     const fetchcart=async()=>{
-        const response=await axios.get("http://localhost:3001/api/showcart",config)
+        const response=await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/showcart",config)
         setData(response.data.cart)
     }
     const removeItem = async (id) => {

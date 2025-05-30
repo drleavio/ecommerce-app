@@ -21,7 +21,7 @@ const Login = () => {
     const handleclick = async (e) => {
         e.preventDefault();
         setLoading(true)
-        const response = await axios.post("http://localhost:3001/auth/signin", data);
+        const response = await axios.post("https://ecommerce-app-1-gn2p.onrender.com/auth/signin", data);
         console.log(response.data.token);
         setTokenState(response.data.token)
         toast.success("loggedin successfully")

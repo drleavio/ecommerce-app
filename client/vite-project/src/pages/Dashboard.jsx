@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const Dashboard = () => {
     const [product, setProduct] = useState([]);
     const fetchProducts = async () => {
-        const response = await axios.get("http://localhost:3001/api/products");
+        const response = await axios.get("https://ecommerce-app-1-gn2p.onrender.com/api/products");
         console.log(response.data.response);
         setProduct(response.data.response)
     }

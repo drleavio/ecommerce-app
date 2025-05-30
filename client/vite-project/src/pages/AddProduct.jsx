@@ -23,7 +23,7 @@ const AddProduct = () => {
     }
     const handleClick = async () => {
         try {
-            const response = await axios.post("http://localhost:3001/api/addproducts", data)
+            const response = await axios.post("https://ecommerce-app-1-gn2p.onrender.com/api/addproducts", data)
             console.log(response);
 
         } catch (error) {
