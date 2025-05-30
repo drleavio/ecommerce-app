@@ -3,7 +3,7 @@ const router = express.Router();
 const Product = require("../schema/productSchema");
 const connect = require('../db/connectDB');
 const Cart = require('../schema/cartSchema');
-const Order=require('../schema/orderSchema')
+const Order = require('../schema/orderSchema')
 const checkToken = require('../middleware');
 const nodemailer = require("nodemailer");
 
@@ -60,7 +60,7 @@ router.get("/products", async (req, res) => {
 })
 
 router.put("/updatecart", checkToken, async (req, res) => {
-  const userId=req.userId;
+  const userId = req.userId;
   const { productId, quantity } = req.body;
 
   if (!userId || !productId || quantity == null) {
@@ -118,12 +118,12 @@ router.put("/updatecart", checkToken, async (req, res) => {
 router.get("/showcart", checkToken, async (req, res) => {
   const userId = req.userId;
   // console.log(userId,"user");
-  
+
   try {
     await connect()
     let cart = await Cart.findOne({ user: userId });
     // console.log(cart);
-    
+
     return res.json({
       messgae: "card show success",
       cart
@@ -170,8 +170,8 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
     return res.status(400).json({ message: "Cart is empty" });
   }
 
-  console.log(id,userId,"check");
-  
+  console.log(id, userId, "check");
+
   try {
     const {
       name,
@@ -186,7 +186,7 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
     } = req.body;
     // const productList=await Cart.findById(id);
     // console.log(productList.items,"list");
-    
+
     const newOrder = new Order({
       user: userId,
       cart: cart.items.map(item => ({
@@ -194,7 +194,7 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
         name: item.name,
         quantity: item.quantity,
         price: item.price,
-        image:item.image
+        image: item.image
       })),
       name,
       email,
@@ -206,15 +206,15 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
       cvv,
       price
     });
-   
+
     const savedOrder = await newOrder.save();
     await Cart.deleteOne({ user: userId });
     // await sendScoreToEmail(email,id,price) 
-    const timer=setTimeout(()=>{
-      res.json({ message: "Order placed successfully", order: savedOrder,status:"success" });
-    },3000) 
+    const timer = setTimeout(() => {
+      res.json({ message: "Order placed successfully", order: savedOrder, status: "success" });
+    }, 3000)
 
-    return ()=>clearTimeout(timer)
+    return () => clearTimeout(timer)
 
   } catch (error) {
     console.error("Checkout failed:", error);
@@ -222,26 +222,26 @@ router.post("/checkout/:id", checkToken, async (req, res) => {
   }
 });
 
-router.get("/orderdetails",checkToken,async(req,res)=>{
-    const userId=req.userId;
-    try {
-      const response=await Order.find({user:userId});
-      const productdetails=await Cart.find({user:userId})
-      console.log(typeof(response));
-      
-      if(response){
-        return res.json({
-          message:"order details sent successfully",
-          response
-        })
-      }
-    } catch (error) {
+router.get("/orderdetails", checkToken, async (req, res) => {
+  const userId = req.userId;
+  try {
+    const response = await Order.find({ user: userId });
+    const productdetails = await Cart.find({ user: userId })
+    console.log(typeof (response));
+
+    if (response) {
       return res.json({
-        message:"error fetching order details"
+        message: "order details sent successfully",
+        response
       })
     }
-    
-    
+  } catch (error) {
+    return res.json({
+      message: "error fetching order details"
+    })
+  }
+
+
 })
 
 module.exports = router;
